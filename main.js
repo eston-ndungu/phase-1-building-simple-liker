@@ -4,6 +4,37 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+// Get all like buttons and modal elements
+const likeButtons = document.querySelectorAll('.like-glyph');
+const errorModal = document.querySelector('#modal');
+const errorMessage = document.querySelector('#modal-message');
+
+// Hiding the error modal initially
+errorModal.classList.add('hidden');
+
+// Function to toggle like and handle server response
+function toggleLike(event) {
+  const heart = event.target;
+  
+  // Simulating the server call
+  mimicServerCall()
+    .then(() => {
+      heart.classList.toggle('activated-heart');
+      heart.innerText = heart.innerText === EMPTY_HEART ? FULL_HEART : EMPTY_HEART;
+    })
+    .catch(() => {
+      errorMessage.innerText = 'Oops! Something went wrong.';
+      errorModal.classList.remove('hidden');
+      setTimeout(() => {
+        errorModal.classList.add('hidden');
+      }, 3000);
+    });
+}
+
+// Add event listener to each like button
+for (const button of likeButtons) {
+  button.addEventListener('click', toggleLike);
+}
 
 
 
